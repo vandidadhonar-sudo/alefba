@@ -1,0 +1,7 @@
+name = "alefba"
+compatibility_date = "2025-06-01"
+
+# سایت ایستا (بدون کد سرور) — تمام فایل‌های ریشه به‌عنوان دارایی سرو می‌شوند
+[assets]
+directory = "./"
+not_found_handling = "single-page-application"

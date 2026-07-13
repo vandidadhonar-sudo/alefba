@@ -1,0 +1,266 @@
+/* ============================================================
+   دفترِ اشعارِ حسن بخت‌زاده — نسخهٔ خطی معاصر
+   ============================================================ */
+
+/* ---------- Fonts (self-hosted) ---------- */
+@font-face{font-family:"Vazir";src:url("fonts/vazir-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Vazir";src:url("fonts/vazir-500.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Vazir";src:url("fonts/vazir-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Gulzar";src:url("fonts/gulzar-400.woff2") format("woff2");font-weight:400;font-display:swap}
+
+/* ---------- Tokens ---------- */
+:root{
+  --paper:#efe7d6;          /* کاغذ کاهی */
+  --paper-2:#e7dcc6;
+  --card:#f6efe0;
+  --ink:#22303f;            /* سرمه‌ای */
+  --ink-soft:#4a5866;
+  --ink-faint:#7b8794;
+  --crimson:#8a2433;        /* زرشکی اصیل */
+  --crimson-deep:#6f1b28;
+  --gold:#b08a4a;           /* طلاکوب */
+  --gold-soft:#c9ad76;
+  --line:#d8c9a9;
+  --line-soft:#e3d7bd;
+  --shadow:20 28 38;
+  --maxw:1080px;
+  --read:44rem;
+  --r:14px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#12161d; --paper-2:#0e1218; --card:#181e27;
+    --ink:#ece3cf; --ink-soft:#c3bca9; --ink-faint:#8b8676;
+    --crimson:#c8556a; --crimson-deep:#b23f55;
+    --gold:#caa96a; --gold-soft:#8f7844;
+    --line:#2b3441; --line-soft:#232a34;
+    --shadow:0 0 0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12161d; --paper-2:#0e1218; --card:#181e27;
+  --ink:#ece3cf; --ink-soft:#c3bca9; --ink-faint:#8b8676;
+  --crimson:#c8556a; --crimson-deep:#b23f55;
+  --gold:#caa96a; --gold-soft:#8f7844;
+  --line:#2b3441; --line-soft:#232a34; --shadow:0 0 0;
+}
+:root[data-theme="light"]{
+  --paper:#efe7d6; --paper-2:#e7dcc6; --card:#f6efe0;
+  --ink:#22303f; --ink-soft:#4a5866; --ink-faint:#7b8794;
+  --crimson:#8a2433; --crimson-deep:#6f1b28;
+  --gold:#b08a4a; --gold-soft:#c9ad76;
+  --line:#d8c9a9; --line-soft:#e3d7bd; --shadow:20 28 38;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:"Vazir",Tahoma,system-ui,sans-serif;
+  color:var(--ink);background:var(--paper);
+  line-height:1.9;font-size:17px;letter-spacing:0;
+  min-height:100vh;display:flex;flex-direction:column;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+/* بافت کاغذ */
+.paper-grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(176,138,74,.05), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(138,36,51,.04), transparent 45%);
+}
+.paper-grain::after{content:"";position:absolute;inset:0;opacity:.035;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+}
+
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(16px,4vw,34px)}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ---------- Header ---------- */
+.site-header{position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(9px);border-bottom:1px solid var(--line-soft)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:66px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{color:var(--crimson);display:grid;place-items:center;flex:0 0 auto}
+.brand-text{display:flex;flex-direction:column;line-height:1.25}
+.brand-title{font-family:"Gulzar",serif;font-size:1.42rem;color:var(--ink);padding-top:.35em}
+.brand-sub{font-size:.74rem;color:var(--ink-faint);letter-spacing:.02em}
+
+.site-nav{display:flex;align-items:center;gap:4px}
+.site-nav a{padding:8px 13px;border-radius:10px;color:var(--ink-soft);font-size:.98rem;font-weight:500;transition:color .2s,background .2s}
+.site-nav a:hover{color:var(--ink);background:color-mix(in srgb,var(--gold) 14%,transparent)}
+.site-nav a.active{color:var(--crimson)}
+.nav-search{position:relative}
+.nav-search.active{color:var(--crimson)}
+
+.theme-toggle{margin-inline-start:6px;background:none;border:1px solid var(--line);color:var(--ink-soft);
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer;transition:.2s}
+.theme-toggle:hover{color:var(--ink);border-color:var(--gold)}
+.theme-toggle .i-moon{display:none}
+:root[data-theme="dark"] .theme-toggle .i-sun,
+:root:not([data-theme="light"]) .theme-toggle .i-sun{display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .theme-toggle .i-sun{display:none}:root:not([data-theme="light"]) .theme-toggle .i-moon{display:block}}
+:root[data-theme="dark"] .theme-toggle .i-sun{display:none}
+:root[data-theme="dark"] .theme-toggle .i-moon{display:block}
+:root[data-theme="light"] .theme-toggle .i-moon{display:none}
+:root[data-theme="light"] .theme-toggle .i-sun{display:block}
+
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.nav-toggle span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:.25s}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ---------- Main / view transition ---------- */
+main#view{flex:1;padding-block:38px 60px;outline:none}
+.view-enter{animation:fadeUp .5s var(--ease) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.loading{text-align:center;color:var(--ink-faint);padding:80px 0;font-size:1.05rem}
+
+/* ---------- Masthead (divan hero) ---------- */
+.masthead{text-align:center;padding:26px 0 30px;position:relative}
+.masthead .rule{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold);margin:14px 0}
+.masthead .rule::before,.masthead .rule::after{content:"";height:1px;width:min(120px,22vw);background:linear-gradient(90deg,transparent,var(--gold))}
+.masthead .rule::after{background:linear-gradient(270deg,transparent,var(--gold))}
+.masthead h1{font-family:"Gulzar",serif;font-size:clamp(2.1rem,6vw,3.4rem);line-height:1.7;margin:.1em 0 .1em;color:var(--ink);text-wrap:balance;padding-top:.25em}
+.masthead .pen{color:var(--crimson);font-size:1rem;letter-spacing:.04em}
+.masthead .lead{max-width:38rem;margin:14px auto 0;color:var(--ink-soft);font-size:1.02rem}
+
+/* ---------- Section heading ---------- */
+.sec-head{display:flex;align-items:center;gap:16px;margin:8px 0 26px}
+.sec-head h2{font-family:"Gulzar",serif;font-size:1.7rem;color:var(--ink);margin:0;white-space:nowrap;padding-top:.3em}
+.sec-head .dash{flex:1;height:1px;background:linear-gradient(90deg,var(--gold-soft),transparent)}
+.sec-head .count{color:var(--ink-faint);font-size:.85rem}
+
+/* دفتر (category group) */
+.daftar{margin-bottom:44px}
+.daftar-title{display:flex;align-items:center;gap:12px;color:var(--crimson);font-size:1.12rem;font-weight:700;margin:0 0 16px}
+.daftar-title::before{content:"۞";color:var(--gold);font-size:1rem}
+
+/* ---------- Poem cards grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.card{position:relative;background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);
+  padding:22px 22px 20px;cursor:pointer;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
+.card::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:3px;background:linear-gradient(var(--crimson),var(--gold));opacity:.0;transition:opacity .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px -18px rgba(var(--shadow)/.5);border-color:var(--gold-soft)}
+.card:hover::before{opacity:.9}
+.card:focus-visible{outline:2px solid var(--crimson);outline-offset:3px}
+.card h3{font-family:"Gulzar",serif;font-size:1.28rem;margin:0 0 10px;color:var(--ink);line-height:1.7;padding-top:.2em}
+.card .excerpt{color:var(--ink-soft);font-size:.98rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.85}
+.card .meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:14px;color:var(--ink-faint);font-size:.8rem}
+.card .meta .tag{color:var(--crimson)}
+.card .has-audio{color:var(--gold);font-size:.8rem}
+
+/* ---------- Reading view (single poem) ---------- */
+.reader{max-width:var(--read);margin-inline:auto}
+.back-link{display:inline-flex;align-items:center;gap:7px;color:var(--ink-soft);font-size:.92rem;margin-bottom:22px;transition:color .2s}
+.back-link:hover{color:var(--crimson)}
+.poem-head{text-align:center;margin-bottom:8px}
+.poem-head .kicker{color:var(--crimson);font-size:.82rem;letter-spacing:.05em}
+.poem-head h1{font-family:"Gulzar",serif;font-size:clamp(1.9rem,5vw,2.7rem);line-height:1.8;color:var(--ink);margin:.1em 0;text-wrap:balance;padding-top:.25em}
+.poem-orn{color:var(--gold);text-align:center;font-size:1.1rem;margin:12px 0 26px}
+.poem-body{text-align:center}
+.beyt{padding:12px 0;position:relative}
+.beyt + .beyt{border-top:1px solid var(--line-soft)}
+.mesra{font-size:clamp(1.12rem,3.4vw,1.42rem);line-height:2.15;color:var(--ink);font-weight:500}
+.mesra.b{color:var(--ink-soft)}
+.poem-meta{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center;color:var(--ink-faint);font-size:.9rem}
+.poem-meta b{color:var(--ink-soft);font-weight:500}
+.poem-sign{text-align:center;color:var(--crimson);font-family:"Gulzar",serif;font-size:1.5rem;margin-top:20px;padding-top:.2em}
+
+/* audio player */
+.audio-wrap{margin:30px auto 0;max-width:34rem;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.audio-wrap .a-title{color:var(--crimson);font-size:.9rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.audio-wrap audio{width:100%}
+
+/* ---------- Gallery (negarkhaneh) ---------- */
+.gallery-section{background:linear-gradient(180deg,transparent, color-mix(in srgb,var(--ink) 4%,transparent))}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.gal-item{border-radius:12px;overflow:hidden;border:1px solid var(--line-soft);background:var(--card);cursor:zoom-in;aspect-ratio:3/4;position:relative}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.gal-item:hover img{transform:scale(1.05)}
+.gal-cap{position:absolute;inset-inline:0;bottom:0;padding:10px 12px;color:#f6efe0;background:linear-gradient(transparent,rgba(10,12,16,.8));font-size:.85rem}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(8,10,14,.92);display:grid;place-items:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox img{max-width:92vw;max-height:82vh;border-radius:8px;box-shadow:0 30px 80px -20px #000}
+.lightbox .lb-cap{position:absolute;bottom:22px;color:#e7dcc6;font-size:.95rem}
+.lightbox .lb-close{position:absolute;top:20px;inset-inline-end:24px;color:#e7dcc6;font-size:2rem;background:none;border:0;cursor:pointer}
+
+/* ---------- Avaha (voices) ---------- */
+.ava-item{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r);padding:22px;margin-bottom:16px}
+.ava-item h3{font-family:"Gulzar",serif;font-size:1.3rem;color:var(--ink);margin:0 0 8px;padding-top:.2em}
+.ava-item p{color:var(--ink-soft);margin:0 0 14px}
+
+/* ---------- Fehrest (index) ---------- */
+.tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.tab{padding:9px 18px;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft);cursor:pointer;font-size:.95rem;background:none;transition:.2s}
+.tab.active{background:var(--crimson);border-color:var(--crimson);color:#f6efe0}
+.index-list{list-style:none;padding:0;margin:0;columns:2;column-gap:34px}
+.index-list li{break-inside:avoid;padding:8px 0;border-bottom:1px dashed var(--line-soft)}
+.index-list a{display:flex;gap:10px;align-items:baseline;color:var(--ink);transition:color .2s}
+.index-list a:hover{color:var(--crimson)}
+.index-list .il-letter{color:var(--gold);font-weight:700;min-width:1.4em}
+.index-list .il-title{font-family:"Gulzar",serif;font-size:1.08rem;padding-top:.15em}
+.index-letter-head{font-family:"Gulzar",serif;color:var(--crimson);font-size:1.4rem;margin:22px 0 6px;padding-top:.2em}
+
+/* ---------- Search ---------- */
+.search-box{position:relative;max-width:38rem;margin:0 auto 30px}
+.search-box input{width:100%;padding:16px 20px;font-family:inherit;font-size:1.05rem;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:999px;outline:none;transition:.2s}
+.search-box input:focus{border-color:var(--crimson);box-shadow:0 0 0 4px color-mix(in srgb,var(--crimson) 14%,transparent)}
+.search-hint{text-align:center;color:var(--ink-faint);font-size:.9rem;margin-bottom:24px}
+mark{background:color-mix(in srgb,var(--gold) 40%,transparent);color:inherit;padding:0 2px;border-radius:3px}
+
+/* ---------- Poet (about) ---------- */
+.poet{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start;max-width:56rem;margin-inline:auto}
+.poet-photo{aspect-ratio:3/4;border-radius:var(--r);background:
+  repeating-linear-gradient(45deg,var(--paper-2),var(--paper-2) 12px,var(--card) 12px,var(--card) 24px);
+  border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-faint);text-align:center;padding:20px;position:relative;overflow:hidden}
+.poet-photo::after{content:"";position:absolute;inset:8px;border:1px solid var(--gold-soft);border-radius:8px;opacity:.5}
+.poet-photo .ph-mark{font-family:"Gulzar",serif;font-size:2.4rem;color:var(--gold);opacity:.7}
+.poet-photo small{display:block;margin-top:10px;font-size:.8rem}
+.poet-bio h1{font-family:"Gulzar",serif;font-size:2.3rem;color:var(--ink);margin:0 0 4px;padding-top:.25em}
+.poet-bio .aliases{color:var(--crimson);margin-bottom:18px;font-size:1rem}
+.poet-bio p{color:var(--ink-soft);margin:0 0 14px}
+.name-card{margin-top:20px;background:var(--card);border:1px solid var(--line-soft);border-inline-start:3px solid var(--gold);border-radius:10px;padding:16px 18px}
+.name-card h4{margin:0 0 8px;color:var(--crimson);font-size:.95rem}
+.name-card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.95rem}
+.name-card dt{color:var(--ink-faint)}
+.name-card dd{margin:0;color:var(--ink)}
+
+/* ---------- Empty state ---------- */
+.empty{text-align:center;padding:60px 20px;color:var(--ink-faint)}
+.empty .orn{font-size:2rem;color:var(--gold);margin-bottom:14px}
+.empty h3{font-family:"Gulzar",serif;color:var(--ink-soft);font-size:1.4rem;margin:0 0 8px;padding-top:.2em}
+
+/* ---------- Footer ---------- */
+.site-footer{border-top:1px solid var(--line-soft);padding:34px 0 40px;text-align:center;color:var(--ink-faint);margin-top:auto}
+.foot-ornament{color:var(--gold);font-size:1.3rem;margin-bottom:10px}
+.foot-name{color:var(--ink-soft);margin:0 0 4px;font-size:.95rem}
+.foot-note{font-size:.82rem;margin:0}
+.install-btn{margin-top:18px;background:var(--crimson);color:#f6efe0;border:0;padding:11px 22px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:.95rem;transition:.2s}
+.install-btn:hover{background:var(--crimson-deep)}
+
+/* ---------- Errors ---------- */
+.err{max-width:36rem;margin:60px auto;text-align:center;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px}
+.err b{color:var(--crimson)}
+
+/* ---------- Responsive ---------- */
+@media (max-width:820px){
+  .nav-toggle{display:flex}
+  .site-nav{position:fixed;inset-block:66px auto;inset-inline:0;flex-direction:column;align-items:stretch;
+    background:var(--paper);border-bottom:1px solid var(--line);padding:12px 18px 20px;gap:2px;
+    transform:translateY(-140%);transition:transform .32s var(--ease);box-shadow:0 20px 40px -24px rgba(var(--shadow)/.5)}
+  .site-nav.open{transform:none}
+  .site-nav a{padding:13px 10px;border-bottom:1px solid var(--line-soft)}
+  .theme-toggle{align-self:flex-start;margin-top:8px}
+  .poet{grid-template-columns:1fr;gap:24px}
+  .poet-photo{max-width:240px;margin-inline:auto}
+  .index-list{columns:1}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}

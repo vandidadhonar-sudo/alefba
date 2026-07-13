@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>دفترِ اشعارِ حسن بخت‌زاده</title>
+  <meta name="description" content="دیوان دیجیتال اشعار و خطاطی‌های حسن بخت‌زاده، متخلص به الف‌ب — غزلیات، دوبیتی‌ها، نگارخانهٔ خطاطی و آواها." />
+  <meta name="theme-color" content="#efe7d6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#12161d" media="(prefers-color-scheme: dark)" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/img/icon-192.png" />
+  <link rel="stylesheet" href="assets/styles.css" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="دفترِ اشعارِ حسن بخت‌زاده" />
+  <meta property="og:description" content="دیوان دیجیتال اشعار و خطاطی‌های حسن بخت‌زاده، متخلص به الف‌ب." />
+</head>
+<body>
+  <div class="paper-grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#/divan" aria-label="خانه">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="34" height="34" role="img" aria-hidden="true">
+            <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.55"/>
+            <path d="M24 9 L24 39" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M15 31 Q24 37 33 31" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="24" cy="16" r="1.9" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-title">دفترِ اشعار</span>
+          <span class="brand-sub">حسن بخت‌زاده — الف‌ب</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="فهرست" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav">
+        <a href="#/divan" data-route="divan">دیوان</a>
+        <a href="#/negarkhaneh" data-route="negarkhaneh">نگارخانه</a>
+        <a href="#/avaha" data-route="avaha">آواها</a>
+        <a href="#/fehrest" data-route="fehrest">فهرست</a>
+        <a href="#/poet" data-route="poet">شاعر</a>
+        <a href="#/search" data-route="search" class="nav-search" aria-label="جستجو">جستجو</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="حالت روز و شب" title="حالت روز/شب">
+          <svg class="i-sun" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.5 4.5l2 2M17.5 17.5l2 2M19.5 4.5l-2 2M6.5 17.5l-2 2"/></g></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" width="20" height="20"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="currentColor"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="view" class="wrap" tabindex="-1">
+    <div class="loading">در حال گشودن دفتر…</div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-ornament" aria-hidden="true">۞</div>
+      <p class="foot-name">دفترِ اشعارِ حسن بخت‌زاده — متخلص به «الف‌ب»</p>
+      <p class="foot-note">این دفتر دیجیتال با مهر برای ماندگاری آثار ایشان فراهم شده است.</p>
+      <button class="install-btn" id="installBtn" hidden>نصب این دفتر روی گوشی</button>
+    </div>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
