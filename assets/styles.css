@@ -264,3 +264,16 @@ mark{background:color-mix(in srgb,var(--gold) 40%,transparent);color:inherit;pad
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
+
+/* ---------- Poet photos ---------- */
+.brand-mark{width:44px;height:44px}
+.brand-photo{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center;
+  border:1.5px solid var(--gold);box-shadow:0 2px 8px -3px rgba(var(--shadow)/.6);display:block}
+
+.masthead-portrait{width:clamp(116px,20vw,152px);aspect-ratio:1;margin:0 auto 4px;border-radius:50%;
+  overflow:hidden;border:2px solid var(--gold);
+  box-shadow:0 16px 36px -18px rgba(var(--shadow)/.6),0 0 0 7px color-mix(in srgb,var(--gold) 12%,transparent)}
+.masthead-portrait img{width:100%;height:100%;object-fit:cover;object-position:center}
+
+.poet-photo.has-img{background:none;padding:0;overflow:hidden}
+.poet-photo.has-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}

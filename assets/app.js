@@ -90,6 +90,7 @@
   /* ---------- views ---------- */
   function viewDivan() {
     var h = '<section class="masthead">' +
+      '<div class="masthead-portrait"><img src="assets/img/poet-face.webp" alt="حسن بخت‌زاده — الف‌ب" width="150" height="150" loading="eager"></div>' +
       '<div class="rule"><span>۞</span></div>' +
       '<h1>' + esc(cfg.SITE_TITLE) + '</h1>' +
       '<div class="pen">به خطّ دل، متخلص به «الف‌ب»</div>' +
@@ -225,8 +226,7 @@
 
   function viewPoet() {
     return '<div class="poet">' +
-      '<div class="poet-photo"><div><span class="ph-mark">الف‌ب</span>' +
-      '<small>تصویر جناب بخت‌زاده<br>به‌زودی</small></div></div>' +
+      '<div class="poet-photo has-img"><img src="assets/img/poet-main.webp" alt="حسن بخت‌زاده، متخلص به الف‌ب" loading="lazy"></div>' +
       '<div class="poet-bio">' +
       '<h1>حسن بخت‌زاده</h1>' +
       '<div class="aliases">خطّاط و شاعر — متخلص به «الف‌ب»</div>' +
