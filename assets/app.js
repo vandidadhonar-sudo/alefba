@@ -146,7 +146,11 @@
       '<div class="poem-body">' + body + '</div>' +
       '<div class="poem-sign">' + esc(p.author || cfg.PEN_NAME) + '</div>' +
       (meta.length ? '<div class="poem-meta">' + meta.join("") + '</div>' : '') +
-      audio + '</article>';
+      audio +
+      '<div class="share-row">' +
+      '<button class="share-btn" data-share="link" data-id="' + esc(p.id) + '">🔗 هم‌رسانی</button>' +
+      '<button class="share-btn primary" data-share="card" data-id="' + esc(p.id) + '">🖼 کارت تصویری</button>' +
+      '</div></article>';
   }
 
   function viewGallery() {
@@ -154,7 +158,7 @@
     if (!state.images.length) return h + emptyHTML("نگارخانه به‌زودی", "خطاطی‌های جناب بخت‌زاده پس از افزودن در ربات، اینجا با شکوه نمایش داده می‌شوند.");
     h += '<div class="gal-grid">';
     state.images.forEach(function (im) {
-      h += '<figure class="gal-item" data-src="' + esc(im.image_url) + '" data-cap="' + esc(im.title || "") + '">' +
+      h += '<figure class="gal-item" data-src="' + esc(im.image_url) + '" data-cap="' + esc(im.title || "") + '" data-id="' + esc(im.id) + '">' +
         '<img loading="lazy" src="' + esc(im.image_url) + '" alt="' + esc(im.title || "خطاطی") + '">' +
         (im.title ? '<figcaption class="gal-cap">' + esc(im.title) + '</figcaption>' : '') + '</figure>';
     });
@@ -167,7 +171,8 @@
     state.voices.forEach(function (v) {
       h += '<div class="ava-item"><h3>' + esc(v.title || "بی‌عنوان") + '</h3>' +
         (v.content ? '<p>' + esc(v.content).replace(/\n/g, "<br>") + '</p>' : '') +
-        '<audio controls preload="none" src="' + esc(v.audio_url) + '"></audio></div>';
+        '<audio controls preload="none" src="' + esc(v.audio_url) + '"></audio>' +
+        '<div class="share-row"><button class="share-btn" data-share="link" data-id="' + esc(v.id) + '">🔗 هم‌رسانی</button></div></div>';
     });
     return h;
   }
@@ -252,10 +257,11 @@
     if (r.route === "negarkhaneh") wireGallery();
     if (r.route === "fehrest") wireFehrest();
     if (r.route === "search") wireSearch();
+    wireShareButtons();
   }
   function wireGallery() {
     document.querySelectorAll(".gal-item").forEach(function (fig) {
-      fig.addEventListener("click", function () { openLightbox(fig.getAttribute("data-src"), fig.getAttribute("data-cap")); });
+      fig.addEventListener("click", function () { openLightbox(fig.getAttribute("data-src"), fig.getAttribute("data-cap"), fig.getAttribute("data-id")); });
     });
   }
   function wireFehrest() {
@@ -277,17 +283,115 @@
   }
 
   /* ---------- lightbox ---------- */
-  var lb;
-  function openLightbox(src, cap) {
+  var lb, lbId;
+  function openLightbox(src, cap, id) {
+    lbId = id;
     if (!lb) {
       lb = document.createElement("div"); lb.className = "lightbox";
-      lb.innerHTML = '<button class="lb-close" aria-label="بستن">×</button><img alt=""><div class="lb-cap"></div>';
+      lb.innerHTML = '<button class="lb-close" aria-label="بستن">×</button><img alt=""><div class="lb-cap"></div><button class="lb-share">🔗 هم‌رسانی</button>';
       document.body.appendChild(lb);
       lb.addEventListener("click", function (e) { if (e.target === lb || e.target.classList.contains("lb-close")) lb.classList.remove("open"); });
+      lb.querySelector(".lb-share").addEventListener("click", function () { var it = byId(lbId); if (it) shareLink(it); });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape" && lb) lb.classList.remove("open"); });
     }
     lb.querySelector("img").src = src; lb.querySelector(".lb-cap").textContent = cap || "";
     lb.classList.add("open");
+  }
+
+  /* ---------- share & poem cards ---------- */
+  function toast(msg) {
+    var t = document.createElement("div"); t.className = "toast"; t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.classList.add("show"); });
+    setTimeout(function () { t.classList.remove("show"); setTimeout(function () { t.remove(); }, 350); }, 2200);
+  }
+  function itemUrl(item) {
+    var base = location.origin + location.pathname;
+    var t = item.type;
+    if (t === "voice" || t === "audio") return base + "#/avaha";
+    if (t === "calligraphy" || t === "image") return base + "#/negarkhaneh";
+    return base + "#/poem/" + item.id;
+  }
+  function shareLink(item) {
+    var url = itemUrl(item);
+    var out = [];
+    if (item.title) out.push("«" + item.title + "»");
+    var fm = firstMesra(item.content);
+    if (fm) out.push(fm);
+    out.push("— " + (item.author || cfg.PEN_NAME));
+    out.push(url);
+    var text = out.join("\n");
+    if (navigator.share) {
+      navigator.share({ title: item.title || cfg.SITE_TITLE, text: text, url: url }).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () { toast("لینک کپی شد ✅"); }, function () { toast(url); });
+    } else { toast(url); }
+  }
+  function sharePoemCard(poem) {
+    toast("در حال ساختِ کارت…");
+    makePoemCardBlob(poem).then(function (blob) {
+      var file = new File([blob], "alefba-poem.png", { type: "image/png" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file], title: poem.title || cfg.SITE_TITLE }).catch(function () {});
+      } else {
+        var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "alefba-poem.png"; a.click();
+        toast("کارت ذخیره شد 🖼");
+      }
+    }).catch(function (e) { console.error(e); toast("ساختِ کارت ناموفق بود"); });
+  }
+  function makePoemCardBlob(poem) {
+    var W = 1080, H = 1350;
+    var C = { paper: "#efe7d6", paper2: "#e7dcc6", ink: "#22303f", ink2: "#4a5866", crimson: "#8a2433", gold: "#b08a4a", faint: "#7b8794" };
+    var canvas = document.createElement("canvas"); canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext("2d");
+    return Promise.all([
+      document.fonts.load("400 90px Gulzar"),
+      document.fonts.load("500 46px Vazir"),
+      document.fonts.load("400 40px Vazir")
+    ]).catch(function () {}).then(function () {
+      ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+      try { ctx.direction = "rtl"; } catch (e) {}
+      var g = ctx.createRadialGradient(W / 2, H * 0.4, 120, W / 2, H / 2, H * 0.78);
+      g.addColorStop(0, C.paper); g.addColorStop(1, C.paper2);
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = C.gold; ctx.lineWidth = 2; ctx.strokeRect(46, 46, W - 92, H - 92);
+      ctx.strokeStyle = "rgba(138,36,51,.4)"; ctx.lineWidth = 1; ctx.strokeRect(62, 62, W - 124, H - 124);
+      ctx.fillStyle = C.gold; ctx.font = "40px Vazir"; ctx.fillText("۞ ✦ ۞", W / 2, 152);
+      var title = poem.title || "بی‌عنوان";
+      var ts = 80; ctx.font = ts + "px Gulzar";
+      while (ctx.measureText(title).width > W - 220 && ts > 40) { ts -= 4; ctx.font = ts + "px Gulzar"; }
+      ctx.fillStyle = C.ink; ctx.fillText(title, W / 2, 272);
+      ctx.fillStyle = C.crimson; ctx.font = "28px Vazir"; ctx.fillText("✦", W / 2, 330);
+      var hs = lines(poem.content), trunc = false, cap = 26;
+      if (hs.length > cap) { hs = hs.slice(0, cap - 1); trunc = true; }
+      var top = 380, bottom = 1120, avail = bottom - top, n = hs.length || 1;
+      var lh = Math.min(78, avail / (n + Math.floor(n / 2) * 0.35));
+      var fs = Math.max(26, Math.min(46, lh * 0.6));
+      var gap = lh * 0.35;
+      var blockH = n * lh + Math.floor(n / 2) * gap;
+      var y = top + Math.max(0, (avail - blockH) / 2) + fs;
+      ctx.font = "500 " + fs + "px Vazir";
+      for (var i = 0; i < hs.length; i++) {
+        ctx.fillStyle = (i % 2 === 0) ? C.ink : C.ink2;
+        ctx.fillText(hs[i], W / 2, y);
+        y += lh; if (i % 2 === 1) y += gap;
+      }
+      if (trunc) { ctx.fillStyle = C.faint; ctx.fillText("…", W / 2, y); }
+      ctx.fillStyle = C.crimson; ctx.font = "64px Gulzar"; ctx.fillText(poem.author || cfg.PEN_NAME, W / 2, 1204);
+      ctx.fillStyle = C.faint; ctx.font = "26px Vazir"; ctx.fillText("دفترِ اشعارِ حسن بخت‌زاده   ·   alefba.ink", W / 2, 1286);
+      return new Promise(function (resolve, reject) {
+        canvas.toBlob(function (b) { b ? resolve(b) : reject(new Error("toBlob failed")); }, "image/png");
+      });
+    });
+  }
+  function wireShareButtons() {
+    document.querySelectorAll(".share-btn").forEach(function (b) {
+      if (b._wired) return; b._wired = true;
+      b.addEventListener("click", function () {
+        var item = byId(b.getAttribute("data-id")); if (!item) return;
+        if (b.getAttribute("data-share") === "card") sharePoemCard(item); else shareLink(item);
+      });
+    });
   }
 
   /* ---------- nav + theme ---------- */
