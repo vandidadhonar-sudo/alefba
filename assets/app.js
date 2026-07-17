@@ -93,7 +93,7 @@
       '<div class="masthead-portrait"><img src="assets/img/poet-face.webp" alt="حسن بخت‌زاده — الف‌ب" width="150" height="150" loading="eager"></div>' +
       '<div class="rule"><span>۞</span></div>' +
       '<h1>' + esc(cfg.SITE_TITLE) + '</h1>' +
-      '<div class="pen">به خطّ دل، متخلص به «الف‌ب»</div>' +
+      '<div class="pen">به خطّ دل، متخلص به «الف‌ب» و «صبا»</div>' +
       '<p class="lead">دفتری دیجیتال از غزل‌ها، دوبیتی‌ها، خطاطی‌ها و آواهای جناب حسن بخت‌زاده؛ نگاشته برای ماندگاری.</p>' +
       '</section>';
     if (!state.poems.length) {
