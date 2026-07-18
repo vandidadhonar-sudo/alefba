@@ -90,7 +90,7 @@
   /* ---------- views ---------- */
   function viewDivan() {
     var h = '<section class="masthead">' +
-      '<div class="masthead-portrait"><img src="assets/img/poet-face.webp" alt="حسن بخت‌زاده — الف‌ب" width="150" height="150" loading="eager"></div>' +
+      '<div class="masthead-portrait"><img src="assets/img/poet-face.webp" alt="حسن بخت‌زاده — صبا" width="150" height="150" loading="eager"></div>' +
       '<div class="rule"><span>۞</span></div>' +
       '<h1>' + esc(cfg.SITE_TITLE) + '</h1>' +
       '<div class="pen">به خطّ دل، متخلص به «صبا»</div>' +
@@ -234,14 +234,14 @@
       '<div class="poet-photo has-img"><img src="assets/img/poet-main.webp" alt="حسن بخت‌زاده به همراه همسر" loading="lazy"></div>' +
       '<div class="poet-bio">' +
       '<h1>حسن بخت‌زاده</h1>' +
-      '<div class="aliases">شاعر و خوشنویس — متخلص به «الف‌ب»</div>' +
+      '<div class="aliases">شاعر و خوشنویس — متخلص به «صبا»</div>' +
       '<p>زادهٔ شیراز، سومِ دی‌ماهِ سال ۱۳۲۷ هجری خورشیدی. از همان دورانِ تحصیلاتِ ابتدایی و متوسطه در شیراز، در انجمن‌های شعرِ شیراز حضور یافت و با بزرگانِ ادبِ فارس، از همان آغاز قدم در عرصهٔ ادبیات گذاشت.</p>' +
       '<p>ایشان سالیانِ سال با قلم و کلام زیسته‌اند؛ هم خطّ خوش را ارج نهاده‌اند و هم ادبیات و شعر را. این دفتر دیجیتال فراهم آمده تا آثار ایشان — از غزل و دوبیتی تا خطاطی و خوانشِ صدا — یک‌جا و ماندگار در دسترسِ دوستداران باشد.</p>' +
       '<div class="name-card"><h4>دربارهٔ نام و تخلص</h4><dl>' +
       '<dt>نام</dt><dd>حسن بخت‌زاده</dd>' +
-      '<dt>تخلصِ کنونی</dt><dd>الف‌ب</dd>' +
-      '<dt>تخلصِ پیشین</dt><dd>صبا</dd>' +
-      '</dl><p style="margin:12px 0 0;color:var(--ink-faint);font-size:.9rem">در پای اشعار، تخلصِ «الف‌ب» ذکر می‌شود؛ برخی سروده‌های کهن‌تر با تخلصِ «صبا» نگاشته شده‌اند.</p></div>' +
+      '<dt>تخلص</dt><dd>صبا</dd>' +
+      '<dt>تخلصِ دیگر</dt><dd>الف‌ب</dd>' +
+      '</dl><p style="margin:12px 0 0;color:var(--ink-faint);font-size:.9rem">ایشان بیشتر با تخلصِ «صبا» شعر می‌سرایند و برخی سروده‌ها را نیز با تخلصِ «الف‌ب» امضا کرده‌اند.</p></div>' +
       '</div></div>';
   }
 

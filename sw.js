@@ -1,5 +1,5 @@
-/* Service worker — دفترِ الف‌ب */
-var CACHE = "alefba-v8";
+/* Service worker — دفترِ صبا */
+var CACHE = "alefba-v9";
 var SHELL = [
   "./", "index.html", "assets/styles.css", "assets/app.js", "assets/config.js",
   "assets/fonts/vazir-400.woff2", "assets/fonts/vazir-500.woff2",
